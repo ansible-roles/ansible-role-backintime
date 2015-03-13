@@ -36,7 +36,7 @@ roles:
 More examples
 -------------
 
-Read [docs/EXAMPLES.md](docs/EXAMPLES.md) for more examples.
+Read [docs/EXAMPLES.md](https://github.com/ansible-roles/ansible-role-backintime/blob/master/docs/EXAMPLES.md) for more examples.
 
 Also, you can read `templates/etc/backintime/config.j2` and [backintim-config man-page](http://manpages.ubuntu.com/manpages/utopic/man1/backintime-config.1.html) to know more about backintime configuration file.
 
