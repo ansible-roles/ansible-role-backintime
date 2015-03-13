@@ -1,0 +1,93 @@
+{% for profile in backintime_profiles %}
+{% set profile_loop = loop %}
+
+profile{{ profile_loop.index }}.name={{ profile.name|default('Profile #' ~ profile_loop.index ) }}
+profile{{ profile_loop.index }}.snapshots.log_level={{ profile.log_level|default(backintime_log_level_default) }}
+profile{{ profile_loop.index }}.snapshots.mode={{ profile.mode|default(backintime_mode_default) }}
+
+{# What include to backup #}
+{% for include in profile.include %}
+{% set include_loop = loop %}
+profile{{ profile_loop.index }}.snapshots.include.{{ include_loop.index }}.type={{ include.type|default(const_backintime_include_type_dir) }}
+profile{{ profile_loop.index }}.snapshots.include.{{ include_loop.index }}.value={{ include.value|default(include) }}
+{% endfor %}
+profile{{ profile_loop.index }}.snapshots.include.size={{ profile.include|count }}
+
+{# What exclude from backup #}
+{% for exclude in profile.exclude|default(backintime_exclude_defaults) %}
+{% set exclude_loop = loop %}
+profile{{ profile_loop.index }}.snapshots.exclude.{{ exclude_loop.index }}.value={{ exclude.value|default(exclude) }}
+{% endfor %}
+profile{{ profile_loop.index }}.snapshots.exclude.size={{ profile.excludes|default(backintime_exclude_defaults)|count }}
+
+{# Where to copy backup #}
+profile{{ profile_loop.index }}.snapshots.path={{ profile.path }}
+profile{{ profile_loop.index }}.snapshots.path.auto={{ profile.path_auto|default(backintime_path_auto_default) }}
+profile{{ profile_loop.index }}.snapshots.path.host={{ profile.path_auto_host|default(backintime_path_auto_host_default) }}
+profile{{ profile_loop.index }}.snapshots.path.user={{ profile.path_auto_user|default(backintime_path_auto_user_default) }}
+profile{{ profile_loop.index }}.snapshots.path.profile={{ profile_loop.index }}
+
+{# When starting #}
+profile{{ profile_loop.index }}.snapshots.automatic_backup_mode={{ profile.automatic_backup_mode|default(backintime_automatic_backup_mode_default) }}
+profile{{ profile_loop.index }}.snapshots.automatic_backup_time={{ profile.automatic_backup_time|default(backintime_automatic_backup_time_default) }}
+profile{{ profile_loop.index }}.snapshots.automatic_backup_day={{ profile.automatic_backup_day|default(backintime_automatic_backup_day_default) }}
+profile{{ profile_loop.index }}.snapshots.automatic_backup_weekday={{ profile.automatic_backup_weekday|default(backintime_automatic_backup_weekday_default) }}
+profile{{ profile_loop.index }}.snapshots.automatic_backup_anacron_period={{ profile.automatic_backup_anacron_period|default(backintime_automatic_backup_anacron_period_default) }}
+profile{{ profile_loop.index }}.snapshots.custom_backup_time={{ profile.custom_backup_time|default(backintime_custom_backup_time_default) }}
+
+{# Remove files older than ... #}
+{% set __backintime_remove_old_snapshots=profile.remove_old_snapshots|default(backintime_remove_old_snapshots_defaults) %}
+{% if __backintime_remove_old_snapshots %}
+profile{{ profile_loop.index }}.snapshots.remove_old_snapshots.enabled={{ __backintime_remove_old_snapshots.enabled|default(true) }}
+profile{{ profile_loop.index }}.snapshots.remove_old_snapshots.unit={{ __backintime_remove_old_snapshots.unit|default(const_backintime_day)}}
+profile{{ profile_loop.index }}.snapshots.remove_old_snapshots.value={{ __backintime_remove_old_snapshots.value|default(__backintime_remove_old_snapshots) }}
+{% endif %}
+
+{# Remove files when free space lower than ... #}
+{% set __backintime_min_free_space=profile.min_free_space|default(backintime_min_free_space_defaults) %}
+{% if __backintime_min_free_space %}
+profile{{ profile_loop.index }}.snapshots.min_free_space.enabled={{ __backintime_min_free_space.enabled|default(true) }}
+profile{{ profile_loop.index }}.snapshots.min_free_space.unit={{ __backintime_min_free_space.unit|default(const_backintime_gb) }}
+profile{{ profile_loop.index }}.snapshots.min_free_space.value={{ __backintime_min_free_space.value|default(__backintime_min_free_space) }}
+{% else %}
+profile{{ profile_loop.index }}.snapshots.min_free_space.enabled=false
+{% endif %}
+
+{# Remove files when free inodes lower than ... % #}
+{% set __backintime_min_free_inodes=profile.min_free_inodes|default(backintime_min_free_inodes_defaults) %}
+{% if __backintime_min_free_inodes %}
+profile{{ profile_loop.index }}.snapshots.min_free_inodes.enabled={{ __backintime_min_free_inodes.enabled|default(true) }}
+profile{{ profile_loop.index }}.snapshots.min_free_inodes.value={{ __backintime_min_free_inodes.value|default(__backintime_min_free_inodes) }}
+{% else %}
+profile{{ profile_loop.index }}.snapshots.min_free_inodes.enabled=false
+{% endif %}
+
+{# Smart remove #}
+{% set __backintime_smart_remove=profile.smart_remove|default(backintime_smartremove_defaults) %}
+{% if __backintime_smart_remove %}
+profile{{ profile_loop.index }}.snapshots.smart_remove={{ __backintime_smart_remove.enabled|default(true) }}
+profile{{ profile_loop.index }}.snapshots.smart_remove.keep_all={{ __backintime_smart_remove.keep_all|default(3) }}
+profile{{ profile_loop.index }}.snapshots.smart_remove.keep_one_per_day={{ __backintime_smart_remove.keep_one_per_day|default(7) }}
+profile{{ profile_loop.index }}.snapshots.smart_remove.keep_one_per_week={{ __backintime_smart_remove.keep_one_per_week|default(4) }}
+profile{{ profile_loop.index }}.snapshots.smart_remove.keep_one_per_month={{ __backintime_smart_remove.keep_one_per_month|default(12) }}
+{% else %}
+profile{{ profile_loop.index }}.snapshots.smart_remove=false
+{% endif %}
+
+profile{{ profile_loop.index }}.snapshots.backup_on_restore.enabled={{ profile.backup_on_restore|default(backintime_backup_on_restore_default) }}
+profile{{ profile_loop.index }}.snapshots.check_for_changes={{ profile.backup_on_restore|default(backintime_check_for_changes_default) }}
+profile{{ profile_loop.index }}.snapshots.continue_on_errors={{ profile.continue_on_errors|default(backintime_continue_on_errors_default) }}
+profile{{ profile_loop.index }}.snapshots.copy_links={{ profile.copy_links|default(backintime_copy_links_default) }}
+profile{{ profile_loop.index }}.snapshots.copy_unsafe_links={{ profile.copy_unsafe_links|default(backintime_copy_unsafe_links_default) }}
+profile{{ profile_loop.index }}.snapshots.cron.ionice={{ profile.cron_ionice|default(backintime_cron_ionice_default) }}
+profile{{ profile_loop.index }}.snapshots.user_backup.ionice={{ profile.user_backup_ionice|default(backintime_user_backup_ionice_default) }}
+profile{{ profile_loop.index }}.snapshots.cron.nice={{ profile.cron_nice|default(backintime_cron_nice_default) }}
+profile{{ profile_loop.index }}.snapshots.no_on_battery={{ profile.no_on_battery|default(backintime_no_on_battery_default) }}
+profile{{ profile_loop.index }}.snapshots.notify.enabled={{ profile.notify|default(backintime_notify_enabled_default) }}
+profile{{ profile_loop.index }}.snapshots.preserve_acl={{ profile.preserve_acl|default(backintime_preserve_acl_default) }}
+profile{{ profile_loop.index }}.snapshots.preserve_xattr={{ profile.preserve_xattr|default(backintime_preserve_xattr_default) }}
+profile{{ profile_loop.index }}.snapshots.use_checksum={{ profile.use_checksum|default(backintime_use_checksum_default) }}
+
+{% endfor %}
+profiles={% for profile in backintime_profiles %}{% if loop.index0 %}:{% endif %}{{ loop.index }}{% endfor %}
+profiles.version={{ backintime_config_version }}

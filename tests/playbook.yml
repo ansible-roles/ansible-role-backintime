@@ -1,0 +1,92 @@
+---
+
+- hosts: all
+  sudo: true
+
+  vars:
+
+    # Backintime packages
+    backintime_install: false
+      # - backintime-common
+
+    # Backintime defaults
+    backintime_path_auto_default: false
+    backintime_path_auto_host_default: "host"
+    backintime_path_auto_user_default: "user"
+
+    backintime_min_free_space_defaults: false
+    backintime_min_free_inodes_defaults: false
+    backintime_smartremove_defaults: false
+    backintime_exclude_defaults:
+      - exclude-*
+
+    # Backintime profiles
+    backintime_profiles:
+      - name: Test backup
+        include:
+          - "{{ test_source_dir }}"
+        path: "{{ test_dest_dir }}"
+
+    # Test vars
+    test_filename: "file"
+    test_source_dir: "/test"
+
+    test_source_filename: "{{ test_source_dir }}/{{ test_filename }}"
+    test_source_exclude_filename: "{{ test_source_dir }}/exclude-{{ test_filename }}"
+
+    test_dest_dir: "/backup"
+
+  pre_tasks:
+    - name: BackInTime | Test | Create files for backup/exclude it
+      lineinfile:
+        create: yes
+        dest: "{{ item }}"
+        state: present
+        line: "test"
+        mode: 0777
+      with_items:
+        - "{{ test_source_filename }}"
+        - "{{ test_source_exclude_filename }}"
+
+    - name: BackInTime | Test | Create source/dest dirs
+      file:
+        state: directory
+        path: "{{ item }}"
+        mode: 0777
+      with_items:
+        - "{{ test_source_dir }}"
+        - "{{ test_dest_dir }}"
+
+  roles:
+    - ../../ansible-role-backintime
+
+  post_tasks:
+    # - name: Test if directories created
+
+    - name: BackInTime | Test | Run backup
+      shell: >
+        backintime -b
+      register: backup_shell
+      failed_when: "'find snapshots folder' in backup_shell.stdout"
+
+    - name: BackInTime | Test | Get last snapshot ID
+      shell: >
+        backintime --last-snapshot | grep 'SnapshotID: ' | sed 's/^[SnapshotID:]*\s//'
+      register: last_snapshot
+      failed_when: last_snapshot.stdout == ''
+
+    - name: BackInTime | Test | Generate path name to check
+      set_fact:
+        test_check_dir: "{{ test_dest_dir }}/backintime/host/user/1/{{ last_snapshot.stdout }}/backup/test"
+
+    - name: BackInTime | Test | Check if backup file created
+      stat:
+        path: "{{ test_check_dir }}/{{ test_filename }}"
+      register: backuped
+      failed_when: backuped.stat.exists != true
+
+    - name: BackInTime | Test | Check if excluded file not exists
+      stat:
+        path: "{{ test_check_dir }}/exclude-{{ test_filename }}"
+      register: excluded
+      failed_when: excluded.stat.exists != false

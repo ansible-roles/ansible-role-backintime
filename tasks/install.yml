@@ -1,0 +1,8 @@
+---
+
+- name: BackInTime | Install | Packages
+  apt:
+    pkg: "{{ item }}"
+    state: present
+  with_items: backintime_install
+  when: backintime_install != false

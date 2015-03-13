@@ -1,0 +1,183 @@
+---
+
+### Basic config
+
+## Installation packages
+
+# 1. Related packages list
+backintime_install:
+  # Main package
+  - backintime-common
+
+  # Front-end
+  # - backintime-gnome
+  # - backintime-kde
+
+  # Extra packages
+  # @see https://answers.launchpad.net/backintime/+question/249442
+  # - python-keyring
+  # - python-gnomekeyring
+  # - encfs
+
+# 2. Set to false if you don't need to install any packages
+# backintime_install: false
+
+## Config directory
+
+# 1. System-wide
+backintime_config_dir: /etc/backintime
+
+# 2. User-wide
+# backintime_config_dir: ~/.config/backintime
+
+
+### Defaults
+
+# Each profile can contain a dozen configuration parameters
+# but it hard to code each time. So defaults listed below
+# help define basic defaults for all profiles.
+# In that case you only need to define includes (to backup files from)
+# and path (to backup files to) - another config parameters
+# will given from defaults.
+
+## Log level
+backintime_log_level_default: 3
+
+
+## Mode
+# Can be: local|local_encfs|ssh|ssh_encfs
+# WARNING! Only `local` supported now
+backintime_mode_default: local
+
+## Automatic backup mode
+backintime_automatic_backup_mode_default: "{{ const_backintime_automatic_backup_disabled }}"
+
+# Used when `automatic_backup_mode` is set to `const_backintime_automatic_backup_daily`
+backintime_automatic_backup_time_default: 0 # Midnight
+# backintime_automatic_backup_time_default: 100 # 1:00
+# backintime_automatic_backup_time_default: 2130 # 21:30
+
+backintime_automatic_backup_weekday_default: 1 # Monday
+# backintime_automatic_backup_weekday_default: 5 # Friday
+
+backintime_automatic_backup_day_default: 1 # First day of month
+# backintime_automatic_backup_day_default: 15 # 15-th day of month
+
+backintime_automatic_backup_anacron_period_default: 1
+backintime_custom_backup_time_default: "8,12,18,23"
+
+
+## Auto Path
+# Specify auto path if you choose
+# same backup path for more than one profile
+
+# 1. Minimal example - path with default values
+# Backup path become <inventory_hostname>/<ansible_ssh_user>/<profile>
+backintime_path_auto_default: false
+
+# 2. Automatic path - host and user generated automatically
+# backup path become <host>/<user>/<profile>
+#
+# Variables `backintime_path_auto_host_default`, `backintime_path_auto_user_default`
+# or `profile.path_auto_host`, `profile.path_auto_user` will be ignored by backintime
+#
+# WARNING! This option is currently not supported by this role
+# Looks like backintime need manual/external pre-creation of destination
+# directories (<host>/<user>/<profile>) before backup.
+# Otherwise it exit with error
+#
+# backintime_path_auto_default: true
+
+
+# Default host for `backintime_path_auto_default: true`
+# Will be used if `profile.path_auto_host` not specified
+backintime_path_auto_host_default: "{{ inventory_hostname }}"
+
+
+# Default user for `backintime_path_auto_default: true`
+# # Will be used if `profile.path_auto_user` not specified
+backintime_path_auto_user_default: "{{ ansible_ssh_user }}"
+
+
+## Default exclude patterns
+backintime_exclude_defaults:
+  - '*~'
+  - '.git'
+  - '.gvfs'
+  - '/proc'
+  - '/sys'
+  - '/dev'
+  - '/run'
+  - '.cache*'
+  - '[Cc]ache*'
+  - '.thumbnails*'
+  - '[Tt]rash*'
+  - '*.backup*'
+  - '/home/*/Ubuntu One'
+  - '.dropbox*'
+  - '*.crdownload'
+  - '*.part'
+  - '*.filepart'
+  - '*.unison*'
+  - '.DS_Store'
+  - '.ds_store'
+  - 'Thumbs.db'
+  - 'desktop.ini'
+
+## Autoremove old snapshots after
+
+# 1. Minimal example - remove old snapshots after 365 days
+# (days is default unit at this role)
+backintime_remove_old_snapshots_defaults: 365
+
+# 2. Another units example - remove old snapshots after 10 years
+# backintime_remove_old_snapshots_defaults:
+#   unit: {{ backintime_const_year }}
+#   value: 10
+
+# 3. Disabled - do not remove old snapshots
+# backintime_remove_old_snapshots_defaults: false
+
+## Autoremove old snapshots when free space lower than
+# 1. Minimal example - 10 Gb free space
+backintime_min_free_space_defaults: 10
+
+# 2. Extended example with custom unit - 500 Mb free space
+# backintime_min_free_space_defaults:
+#   unit: {{ backintime_const_mb }}
+#   value: 10
+
+# 3. Disabled
+# backintime_min_free_space_defaults: false
+
+## Autoremove old snapshots when free inodes lower than, %
+# 1. Minimal example - 2% inodes
+backintime_min_free_inodes_defaults: 2
+
+# 2. Disabled
+# backintime_min_free_inodes_defaults: false
+
+## Smart remove
+backintime_smartremove_defaults:
+  enabled: true # Enable smart remove
+  keep_all: 3 # Keep all snapshots for the last X days
+  keep_one_per_day: 7 # Keep one snapshot per day for the last X days
+  keep_one_per_week: 4 # Keep one snapshot per week for the last X weeks
+  keep_one_per_month: 12 # Keep one snapshot per month for the last X months
+
+backintime_dont_remove_named_snapshots_default: true
+
+## Options & Advanced options
+backintime_backup_on_restore_default: true
+backintime_check_for_changes_default: true
+backintime_continue_on_errors_default: true
+backintime_copy_links_default: false
+backintime_copy_unsafe_links_default: false
+backintime_cron_ionice_default: true
+backintime_user_backup_ionice_default: false
+backintime_cron_nice_default: true
+backintime_no_on_battery_default: false
+backintime_notify_enabled_default: true
+backintime_preserve_acl_default: false
+backintime_preserve_xattr_default: false
+backintime_use_checksum_default: false

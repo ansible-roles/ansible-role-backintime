@@ -1,0 +1,18 @@
+---
+
+dependencies: []
+
+galaxy_info:
+  author: igor.mukhin@gmail.com
+  description: Install backintime and configure backup profiles on Debian/Ubuntu
+  license: MIT
+  min_ansible_version: 1.4
+  platforms:
+  - name: Ubuntu
+    versions:
+    - all
+  - name: Debian
+    versions:
+    - all
+  categories:
+    - system

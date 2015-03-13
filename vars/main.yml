@@ -1,0 +1,62 @@
+---
+
+# Supported version
+backintime_config_version: 1
+
+# Magic values for backintime config
+const_backintime_mb: 10
+const_backintime_gb: 20
+
+# Contants for Autoremove older than
+# (remove_old_snapshots.unit)
+const_backintime_day:  20
+const_backintime_week: 30
+const_backintime_year: 80
+
+## Include types
+const_backintime_include_type_dir: 0
+const_backintime_include_type_file: 1
+
+## Automatic backup modes
+# Values below may be assigned to
+# `backintime_automatic_backup_mode_default` or
+# `profile.automatic_backup_mode`
+const_backintime_automatic_backup_disabled: 0 # Manual run
+const_backintime_automatic_backup_startup: 1 # Run on startup and shutdown
+const_backintime_automatic_backup_5minutes: 2 # Run every 5 minutes
+const_backintime_automatic_backup_10minutes: 4 # Run every 10 minutes
+const_backintime_automatic_backup_30minutes: 7 # Run every 30 minutes
+const_backintime_automatic_backup_hour: 10 # Run every hour
+const_backintime_automatic_backup_2hour: 12 # Run every 2 hour
+const_backintime_automatic_backup_4hour: 14 # Run every 4 hour
+const_backintime_automatic_backup_6hour: 16 # Run every 6 hour
+const_backintime_automatic_backup_12hour: 18 # Run every 12 hour
+
+# Run every hour listed at
+# `backintime_custom_backup_time_default` or
+# `profile.custom_backup_time`
+const_backintime_automatic_backup_custom: 19
+
+# Run daily at
+# `backintime_automatic_backup_time_default` or
+# `profile.automatic_backup_time`
+const_backintime_automatic_backup_daily: 20
+
+# Run once per
+# `backintime_automatic_backup_anacron_period_default` or
+# `profile.automatic_backup_anacron_period` days
+const_backintime_automatic_backup_anacron: 25
+
+# Run when drive get connected
+const_backintime_automatic_backup_anacron: 27
+
+# Run every week at
+# `backintime_automatic_backup_weekday_default` and `backintime_custom_backup_time_default` or
+# `profile.automatic_backup_weekday` and `profile.custom_backup_time` or
+const_backintime_automatic_backup_week: 30
+
+# Run once per week at
+# `backintime_automatic_backup_day_default` and `backintime_custom_backup_time_default` or
+# `profile.automatic_backup_day` and `profile.custom_backup_time`
+const_backintime_automatic_backup_month: 40
+const_backintime_automatic_backup_year: 80

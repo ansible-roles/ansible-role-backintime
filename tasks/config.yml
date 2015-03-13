@@ -1,0 +1,12 @@
+---
+
+- name: BackInTime | Config | Assure config directory exists
+  file:
+    path: "{{ backintime_config_dir }}"
+    state: directory
+
+- name: BackInTime | Config | Save config file
+  template:
+    src: "etc/backintime/config.j2"
+    dest: "{{ backintime_config_dir }}/config"
+  when: backintime_profiles != false
