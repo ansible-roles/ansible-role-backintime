@@ -44,6 +44,12 @@ Testing
 -------
 
 ```bash
-echo "localhost ansible_connection=local" > tests/hosts
-sudo ansible-playbook tests/playbook.yml -i tests/hosts -vvvv
+cd tests
+vagrant up
+```
+
+or
+
+```bash
+sudo ansible-playbook tests/playbook.yml -i tests/inventory -vvvv
 ```
