@@ -123,6 +123,8 @@ backintime_exclude_defaults:
   - '.ds_store'
   - 'Thumbs.db'
   - 'desktop.ini'
+  - 'node_modules'
+  - 'vendor'
 
 ## Autoremove old snapshots after
 
