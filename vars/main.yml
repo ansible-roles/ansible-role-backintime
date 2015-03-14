@@ -22,7 +22,7 @@ const_backintime_include_type_file: 1
 # `backintime_automatic_backup_mode_default` or
 # `profile.automatic_backup_mode`
 const_backintime_automatic_backup_disabled: 0 # Manual run
-const_backintime_automatic_backup_startup: 1 # Run on startup and shutdown
+const_backintime_automatic_backup_startup: 1 # Run on startup and reboot
 const_backintime_automatic_backup_5minutes: 2 # Run every 5 minutes
 const_backintime_automatic_backup_10minutes: 4 # Run every 10 minutes
 const_backintime_automatic_backup_30minutes: 7 # Run every 30 minutes
