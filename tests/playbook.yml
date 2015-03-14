@@ -6,8 +6,8 @@
   vars:
 
     # Backintime packages
-    backintime_install: false
-      # - backintime-common
+    backintime_install:
+      - backintime-common
 
     # Backintime defaults
     backintime_path_auto_default: false
