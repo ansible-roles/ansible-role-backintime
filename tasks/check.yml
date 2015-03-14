@@ -4,3 +4,10 @@
   fail:
     msg: "You can't set `backintime_path_auto_default` to true. This option don't support this state at this time."
   when: backintime_path_auto_default == true
+
+- name: BackInTime | Check | Mandatory profile options
+  fail:
+    msg: "Profile's #{{ 1 + item.0 }} path not configured correctly. Please, set profile's path or global backintime_path_default."
+  when: "item.1.path is not defined and backintime_path_default is not defined"
+  register: profile_check_fails
+  with_indexed_items: backintime_profiles
