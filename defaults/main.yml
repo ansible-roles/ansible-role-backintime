@@ -66,6 +66,9 @@ backintime_automatic_backup_day_default: 1 # First day of month
 backintime_automatic_backup_anacron_period_default: 1
 backintime_custom_backup_time_default: "8,12,18,23"
 
+## Path
+# You can define default path to store backups to
+# backintime_path_default: "/mnt/external/backup-directory"
 
 ## Auto Path
 # Specify auto path if you choose

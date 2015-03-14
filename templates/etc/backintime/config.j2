@@ -21,7 +21,7 @@ profile{{ profile_loop.index }}.snapshots.exclude.{{ exclude_loop.index }}.value
 profile{{ profile_loop.index }}.snapshots.exclude.size={{ profile.excludes|default(backintime_exclude_defaults)|count }}
 
 {# Where to copy backup #}
-profile{{ profile_loop.index }}.snapshots.path={{ profile.path }}
+profile{{ profile_loop.index }}.snapshots.path={{ profile.path|default(backintime_path_default) }}
 profile{{ profile_loop.index }}.snapshots.path.auto={{ profile.path_auto|default(backintime_path_auto_default) }}
 profile{{ profile_loop.index }}.snapshots.path.host={{ profile.path_auto_host|default(backintime_path_auto_host_default) }}
 profile{{ profile_loop.index }}.snapshots.path.user={{ profile.path_auto_user|default(backintime_path_auto_user_default) }}

@@ -3,6 +3,6 @@
 - name: BackInTime | Directories | Create
   file:
     state: directory
-    path: "{{ item.1.path }}/backintime/{{ item.1.path_auto_host|default(backintime_path_auto_host_default) }}/{{ item.1.path_auto_user|default(backintime_path_auto_user_default) }}/{{ 1 + item.0 }}"
+    path: "{{ item.1.path|default(backintime_path_default) }}/backintime/{{ item.1.path_auto_host|default(backintime_path_auto_host_default) }}/{{ item.1.path_auto_user|default(backintime_path_auto_user_default) }}/{{ 1 + item.0 }}"
     mode: 0644
   with_indexed_items: backintime_profiles

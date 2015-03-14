@@ -33,6 +33,21 @@ roles:
   - { role: igor_mukhin.backintime, tags: backup }
 ```
 
+or
+
+```yml
+vars:
+  backintime_path_default: /mnt/external/backup-directory
+  backintime_profiles:
+    - include:
+        - /var/www
+        - /etc/php5
+        - /etc/apache2
+
+roles:
+  - { role: igor_mukhin.backintime, tags: backup }
+```
+
 More examples
 -------------
 

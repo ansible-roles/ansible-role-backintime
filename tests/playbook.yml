@@ -10,6 +10,8 @@
       - backintime-common
 
     # Backintime defaults
+    backintime_path_default: "{{ test_dest_dir }}"
+
     backintime_path_auto_default: false
     backintime_path_auto_host_default: "host"
     backintime_path_auto_user_default: "user"
@@ -25,7 +27,7 @@
       - name: Test backup
         include:
           - "{{ test_source_dir }}"
-        path: "{{ test_dest_dir }}"
+        # path: "{{ test_dest_dir }}"
 
     # Test vars
     test_filename: "file"
