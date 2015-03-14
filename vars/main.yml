@@ -48,7 +48,7 @@ const_backintime_automatic_backup_daily: 20
 const_backintime_automatic_backup_anacron: 25
 
 # Run when drive get connected
-const_backintime_automatic_backup_anacron: 27
+const_backintime_automatic_backup_drive_get_connected: 27
 
 # Run every week at
 # `backintime_automatic_backup_weekday_default` and `backintime_custom_backup_time_default` or
