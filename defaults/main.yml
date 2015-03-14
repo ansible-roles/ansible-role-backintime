@@ -137,7 +137,7 @@ backintime_remove_old_snapshots_defaults: 365
 
 # 2. Another units example - remove old snapshots after 10 years
 # backintime_remove_old_snapshots_defaults:
-#   unit: "{{ backintime_const_year }}"
+#   unit: "{{ const_backintime_year }}"
 #   value: 10
 
 # 3. Disabled - do not remove old snapshots
@@ -149,7 +149,7 @@ backintime_min_free_space_defaults: 10
 
 # 2. Extended example with custom unit - 500 Mb free space
 # backintime_min_free_space_defaults:
-#   unit: "{{ backintime_const_mb }}"
+#   unit: "{{ const_backintime_mb }}"
 #   value: 500
 
 # 3. Disabled
