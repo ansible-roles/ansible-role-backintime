@@ -1,6 +1,6 @@
 ---
 
-- name: BackInTime | Check | Check restricted options
+- name: BackInTime | Check | Restricted options
   fail:
     msg: "You can't set `backintime_path_auto_default` to true. This option don't support this state at this time."
   when: backintime_path_auto_default == true
