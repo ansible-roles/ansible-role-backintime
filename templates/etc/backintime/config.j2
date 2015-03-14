@@ -90,4 +90,5 @@ profile{{ profile_loop.index }}.snapshots.use_checksum={{ profile.use_checksum|d
 
 {% endfor %}
 profiles={% for profile in backintime_profiles %}{% if loop.index0 %}:{% endif %}{{ loop.index }}{% endfor %}
+
 profiles.version={{ backintime_config_version }}
