@@ -145,7 +145,7 @@ backintime_min_free_space_defaults: 10
 # 2. Extended example with custom unit - 500 Mb free space
 # backintime_min_free_space_defaults:
 #   unit: {{ backintime_const_mb }}
-#   value: 10
+#   value: 500
 
 # 3. Disabled
 # backintime_min_free_space_defaults: false
