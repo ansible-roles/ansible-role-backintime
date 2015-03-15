@@ -60,7 +60,7 @@ Testing
 
 ```bash
 cd tests
-vagrant up
+vagrant up --provision
 ```
 
 or
